@@ -2,7 +2,6 @@ export function createHooks(callback) {
   const stateContext = {
     current: 0,
     states: [],
-    // renderCount,
   };
 
   const memoContext = {
@@ -23,14 +22,6 @@ export function createHooks(callback) {
     };
   }
 
-  const _render = debounceFrame(() => {
-    const { root, rootComponent } = options;
-    if (!root || !rootComponent) return;
-    root.innerHTML = rootComponent();
-    resetContext();
-    // options.renderCount += 1;
-  });
-
   const useState = (initState) => {
     const { current, states } = stateContext;
     stateContext.current += 1;
@@ -39,11 +30,11 @@ export function createHooks(callback) {
 
     const setState = (newState) => {
       if (newState === states[current]) return;
+
       states[current] = newState;
       // debounceFrame(callback);
       requestAnimationFrame(callback);
     };
-    // renderCount++;
 
     return [states[current], setState];
   };
