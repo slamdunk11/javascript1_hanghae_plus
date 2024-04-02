@@ -1,4 +1,3 @@
-
 export function createHooks(callback) {
   const stateContext = {
     current: 0,
@@ -15,6 +14,14 @@ export function createHooks(callback) {
     memoContext.current = 0;
   }
 
+  function debounceFrame(callback) {
+    let nextFrameCallback = -1;
+    return () => {
+      cancelAnimationFrame(nextFrameCallback);
+      nextFrameCallback = requestAnimationFrame(callback);
+    };
+  }
+
   const useState = (initState) => {
     const { current, states } = stateContext;
     stateContext.current += 1;
@@ -23,8 +30,10 @@ export function createHooks(callback) {
 
     const setState = (newState) => {
       if (newState === states[current]) return;
+
       states[current] = newState;
-      callback();
+      // debounceFrame(callback);
+      requestAnimationFrame(callback);
     };
 
     return [states[current], setState];
