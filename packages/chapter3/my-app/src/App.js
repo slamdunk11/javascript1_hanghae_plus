@@ -1,9 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import MetaTag from "./MetaTag";
 
 function App() {
   return (
     <div className="App">
+      <MetaTag
+        props={{
+          description: "키워드는 리액트이다.",
+          keywords: "리액트",
+          title: "렌의 리액트",
+        }}
+      />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
